@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Jarvis Stark</title>
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle, #001018, #000);
+    color: #00f7ff;
+    font-family: Arial;
+    text-align: center;
+}
+
+.container {
+    margin-top: 60px;
+}
+
+.circle {
+    width: 180px;
+    height: 180px;
+    border: 2px solid #00f7ff;
+    border-radius: 50%;
+    margin: auto;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 20px #00f7ff;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.6; }
+}
+
+input {
+    margin-top: 20px;
+    width: 80%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #00f7ff;
+    color: black;
+    font-weight: bold;
+}
+
+#resposta {
+    margin-top: 25px;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="circle"></div>
+
+    <h2>J.A.R.V.I.S STARK</h2>
+
+    <input id="cmd" placeholder="Fale com o Jarvis...">
+
+    <br>
+
+    <button onclick="enviar()">Executar</button>
+
+    <div id="resposta">Sistema online...</div>
+
+</div>
+
+<script>
+
+function falar(texto){
+    let msg = new SpeechSynthesisUtterance(texto);
+    msg.lang = "pt-BR";
+    speechSynthesis.speak(msg);
+}
+
+function enviar(){
+    let cmd = document.getElementById("cmd").value.toLowerCase();
+    let resposta = "";
+
+    if(cmd.includes("oi") || cmd.includes("olá")){
+        resposta = "Sistema ativo, senhor.";
+    }
+
+    else if(cmd.includes("hora")){
+        resposta = new Date().toLocaleTimeString();
+    }
+
+    else if(cmd.includes("data")){
+        resposta = new Date().toLocaleDateString();
+    }
+
+    else if(cmd.includes("youtube")){
+        resposta = "Abrindo YouTube.";
+        window.open("https://youtube.com");
+    }
+
+    else if(cmd.includes("google")){
+        resposta = "Abrindo Google.";
+        window.open("https://google.com");
+    }
+
+    else if(cmd.includes("zap")){
+        resposta = "Abrindo WhatsApp.";
+        window.open("https://wa.me/5511999999999");
+    }
+
+    else if(/\d/.test(cmd)){
+        try {
+            resposta = "Resultado: " + eval(cmd.replace("x","*"));
+        } catch {
+            resposta = "Erro no cálculo.";
+        }
+    }
+
+    else {
+        resposta = "Comando não reconhecido.";
+    }
+
+    document.getElementById("resposta").innerText = resposta;
+    falar(resposta);
+}
+
+</script>
+
+</body>
+</html>
